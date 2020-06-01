@@ -6,3 +6,4 @@
 - [ ] error handling
 - [ ] function
 - [ ] type(array, map, slice)
+- [x] go module
