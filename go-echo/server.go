@@ -67,6 +67,12 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     nil, // 許可するドメインを追加
+		AllowMethods:     nil, // 許可するHTTP Methodを追加
+		AllowHeaders:     nil, // 許可するheaderを追加
+	}))
+
 	e.POST("/users", createUser)
 	e.GET("/users/:id", getUser)
 	e.PUT("/users/:id", updateUser)
