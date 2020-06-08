@@ -24,6 +24,52 @@ go get で、依存モジュールの追加やバージョンアップを行う
 go mod tidy で、使われていない依存モジュールを削除する
 ```
 
+### golang 記法
 
+戻り値の破棄
+```go
+func multi() (int, int) {
+  return 2, 3
+}
 
+a, _ = multi()
+a// 2
+二個目の戻り値破棄
+```
 
+例外機構がないgolangならではのエラーハンドリング処理
+```go
+str := "123"
+w, err := str.Atoi(str)
+if err != nil {
+    // エラーハンドリング
+}
+```
+
+関数戻り値が複数
+```go
+func multi() (int, int) {
+  return 2, 3
+}
+a, b := multi()
+a // 2
+b // 3
+```
+
+関数を返り値にしたり、変数に関数を代入する方法
+```go
+func someThing() func() {
+  return func() {
+    fmt.println("Hello")
+  }
+}
+
+hello := someTHing()
+hello() // Hello
+```
+
+無名関数
+```go
+f := func(x, y int) int { return x + y }
+f(2, 3) // 5
+```
