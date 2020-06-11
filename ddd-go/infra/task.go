@@ -2,7 +2,6 @@ package infra
 
 import (
 	"ddd-go/domain/model"
-	"ddd-go/domain/repository"
 
 	"github.com/jinzhu/gorm"
 )
@@ -13,22 +12,35 @@ type TaskRepository struct {
 }
 
 func (t TaskRepository) Create(task *model.Task) (*model.Task, error) {
-	panic("implement me")
+	if err := t.Conn.Create(&task).Error; err != nil {
+		return nil, err
+	}
+	return task, nil
 }
 
 func (t TaskRepository) FindByID(id int) (*model.Task, error) {
-	panic("implement me")
+	task := &model.Task{ID: id}
+	if err := t.Conn.First(&task).Error; err != nil {
+		return nil, err
+	}
+	return task, nil
 }
 
 func (t TaskRepository) Update(task *model.Task) (*model.Task, error) {
-	panic("implement me")
+	if err := t.Conn.Model(&task).Update(&task).Error; err != nil {
+		return nil, err
+	}
+	return task, nil
 }
 
-func (t TaskRepository) Delete(id int) error {
-	panic("implement me")
+func (t TaskRepository) Delete(task *model.Task) error {
+	if err := t.Conn.Delete(&task).Error; err != nil {
+		return err
+	}
+	return nil
 }
 
 // コンストラクタ
-func NewTaskRepository(conn *gorm.DB) repository.TaskRepository {
+func NewTaskRepository(conn *gorm.DB) *TaskRepository {
 	return &TaskRepository{Conn: conn}
 }
